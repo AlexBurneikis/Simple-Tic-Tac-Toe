@@ -158,13 +158,43 @@ struct ContentView: View {
             }
         }
     }
+    func makeScores() -> some View {
+        return HStack {
+            Spacer()
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(colorScheme == .dark ? .white : .black)
+                    .frame(height: 100)
+            }
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(colorScheme == .dark ? .white : .black)
+                    .frame(height: 100)
+            }
+            Spacer()
+
+        }
+    }
     var body: some View {
         TabView {
             NavigationView {
                 VStack {
+                    Spacer()
                     makeBoard()
+                    Spacer()
+                    makeScores()
                 }
                 .navigationTitle("Tic Tac Toe")
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+                            
+                        } label: {
+                            Text("Reset")
+                        }
+
+                    }
+                }
                 .alert(isPresented: $winAlert) {
                     Alert(
                         title: Text(isCrossTurn ? "o Wins" : "x Wins"),
