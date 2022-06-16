@@ -31,7 +31,11 @@ struct RoundedCorner: Shape {
 }
 
 struct ContentView: View {
-    var boardValues = ["e", "x", "o", "o", "x", "o", "e", "e", "o"]
+    @Environment(\.colorScheme) var colorScheme
+    
+    @State var boardValues = ["e", "e", "e", "e", "e", "e", "e", "e", "e"]
+    @State var isCrossTurn = true
+    @State var winAlert = false
     
     func isSquareFilled(x: Int, y: Int) -> Bool {
         let index = 3 * y + x
@@ -61,11 +65,71 @@ struct ContentView: View {
                 .foregroundColor(Color.black)
         }
         return Image(systemName: "photo")
-            .hidden()
+            .resizable()
+            .frame(width: 0, height: 0)
+            .foregroundColor(Color.black)
+    }
+    func updateSquare(x: Int, y: Int) {
+        let index = 3 * y + x
+        if !isSquareFilled(x: x, y: y) {
+            if isCrossTurn {
+                boardValues[index] = "x"
+                isCrossTurn.toggle()
+            }
+            else {
+                boardValues[index] = "o"
+                isCrossTurn.toggle()
+            }
+        }
+    }
+    func checkLine(x1: Int, y1: Int, x2: Int, y2: Int, x3: Int, y3: Int) -> Bool {
+        if !isSquareFilled(x: x1, y: y1) {
+            return false
+        }
+        if !isSquareFilled(x: x2, y: y2) {
+            return false
+        }
+        if !isSquareFilled(x: x3, y: y3) {
+            return false
+        }
+        if (isSquareCross(x: x1, y: y1) == isSquareCross(x: x2, y: y2)) && (isSquareCross(x: x2, y: y2) == (isSquareCross(x: x3, y: y3))) {
+            return true
+        }
+        return false
+    }
+    func checkWin() {
+        if checkLine(x1: 0, y1: 0, x2: 1, y2: 1, x3: 2, y3: 2) {
+            winAlert.toggle()
+        }
+        //check x=0y=0
+        if checkLine(x1: 0, y1: 0, x2: 1, y2: 0, x3: 2, y3: 0) {
+            winAlert.toggle()
+        }
+        if checkLine(x1: 0, y1: 0, x2: 0, y2: 1, x3: 0, y3: 2) {
+            winAlert.toggle()
+        }
+        //check x=1y=1
+        if checkLine(x1: 1, y1: 1, x2: 0, y2: 1, x3: 2, y3: 1) {
+            winAlert.toggle()
+        }
+        if checkLine(x1: 1, y1: 1, x2: 1, y2: 0, x3: 1, y3: 2) {
+            winAlert.toggle()
+        }
+        if checkLine(x1: 1, y1: 1, x2: 2, y2: 0, x3: 0, y3: 2) {
+            winAlert.toggle()
+        }
+        //check x=2y=2
+        if checkLine(x1: 2, y1: 2, x2: 1, y2: 2, x3: 0, y3: 2) {
+            winAlert.toggle()
+        }
+        if checkLine(x1: 2, y1: 2, x2: 2, y2: 1, x3: 2, y3: 0) {
+            winAlert.toggle()
+        }
     }
     func makeBoard() ->  some View {
         ZStack {
-            Color.black.frame(width: UIScreen.screenWidth / 3.4 * 3, height: UIScreen.screenWidth / 3.4 * 3)
+            Color(colorScheme == .dark ? .white : .black)
+                .frame(width: UIScreen.screenWidth / 3.4 * 3, height: UIScreen.screenWidth / 3.4 * 3)
             VStack {
                 ForEach(0..<3) {j in
                     HStack {
@@ -75,10 +139,11 @@ struct ContentView: View {
                             let bottomLeft: CGFloat = ((i == 1 && (j == 1 || j == 0)) || (i == 2 && (j == 0 || j == 1)) ? 5 : 0)
                             let bottomRight: CGFloat = ((i == 1 && (j == 1 || j == 0)) || (i == 0 && (j == 0 || j == 1)) ? 5 : 0)
                             Button {
-                                
+                                updateSquare(x: i, y: j)
+                                checkWin()
                             } label: {
                                 ZStack {
-                                    Color.white
+                                    Color(colorScheme == .dark ? .black : .white)
                                         .cornerRadius(topLeft, corners: .topLeft)
                                         .cornerRadius(topRight, corners: .topRight)
                                         .cornerRadius(bottomLeft, corners: .bottomLeft)
@@ -100,6 +165,13 @@ struct ContentView: View {
                     makeBoard()
                 }
                 .navigationTitle("Tic Tac Toe")
+                .alert(isPresented: $winAlert) {
+                    Alert(
+                        title: Text(isCrossTurn ? "o Wins" : "x Wins"),
+                        dismissButton: Alert.Button.default(Text("Done")) {
+                            boardValues = ["e", "e", "e", "e", "e", "e", "e", "e", "e"]
+                        })
+                }
             }
         }
     }
