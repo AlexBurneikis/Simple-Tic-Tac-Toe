@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38815EF7285BFA3B00F02600 /* PvPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38815EF6285BFA3B00F02600 /* PvPView.swift */; };
 		38C82AF8285AC5100056EA0D /* Simple_Tic_Tac_ToeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C82AF7285AC5100056EA0D /* Simple_Tic_Tac_ToeApp.swift */; };
 		38C82AFA285AC5100056EA0D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C82AF9285AC5100056EA0D /* ContentView.swift */; };
 		38C82AFC285AC5110056EA0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38C82AFB285AC5110056EA0D /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		38815EF6285BFA3B00F02600 /* PvPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PvPView.swift; sourceTree = "<group>"; };
 		38C82AF4285AC5100056EA0D /* Simple Tic Tac Toe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Tic Tac Toe.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38C82AF7285AC5100056EA0D /* Simple_Tic_Tac_ToeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simple_Tic_Tac_ToeApp.swift; sourceTree = "<group>"; };
 		38C82AF9285AC5100056EA0D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				38C82AF7285AC5100056EA0D /* Simple_Tic_Tac_ToeApp.swift */,
 				38C82AF9285AC5100056EA0D /* ContentView.swift */,
+				38815EF6285BFA3B00F02600 /* PvPView.swift */,
 				38C82AFB285AC5110056EA0D /* Assets.xcassets */,
 				38C82AFD285AC5110056EA0D /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38815EF7285BFA3B00F02600 /* PvPView.swift in Sources */,
 				38C82AFA285AC5100056EA0D /* ContentView.swift in Sources */,
 				38C82AF8285AC5100056EA0D /* Simple_Tic_Tac_ToeApp.swift in Sources */,
 			);
